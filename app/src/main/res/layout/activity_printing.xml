@@ -7,17 +7,31 @@
     android:background="@drawable/appbg2"
     tools:context=".Printing">
 
-    <HorizontalScrollView
+    <android.support.design.widget.TabLayout
         android:layout_width="395dp"
-        android:layout_height="715dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIndicatorColor="@color/design_default_color_primary"
+        app:tabTextColor="@android:color/white">
 
-        <LinearLayout
+        <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
-    </HorizontalScrollView>
+            android:layout_height="wrap_content"
+            android:text="Capen" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lockwood" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TEST" />
+    </android.support.design.widget.TabLayout>
 </android.support.constraint.ConstraintLayout>
