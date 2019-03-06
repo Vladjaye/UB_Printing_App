@@ -24,6 +24,7 @@ public class Printing extends AppCompatActivity {
         //TODO: for sprint #2 - improve algorithm by counting printing time individually for every page among all jobs
 
         int value = 0;
+        value = 200;
         //commint test
         return result;
     }
