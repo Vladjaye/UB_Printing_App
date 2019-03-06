@@ -14,9 +14,8 @@ public class Printing extends AppCompatActivity {
     }
 
 
-
     //Author: Vladyslav Iakusevych
-    public int calculatetime(int jobcount ){
+    public int calculatetime(int jobcount) {
         int jobsqueue = jobcount;
         int maptime = 0; //trave time to library from Google Maps API
         int result = jobsqueue * 10 + maptime;
@@ -29,8 +28,8 @@ public class Printing extends AppCompatActivity {
     }
 
     //Author: Vladyslav Iakusevych
-    public int generatequeue(){
-        int random  = (int)(Math.random() * 10 +1);
+    public int generatequeue() {
+        int random = (int) (Math.random() * 10 + 1);
         return random;
 
         //TODO: Rewrite it for individual pages algorithm

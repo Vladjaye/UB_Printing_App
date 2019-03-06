@@ -11,7 +11,6 @@ public class BasicAlgoTest {
         Printing printactivity = new Printing();
 
 
-
-        assertEquals(100, printactivity.calculatetime(10) );
+        assertEquals(100, printactivity.calculatetime(10));
     }
 }
