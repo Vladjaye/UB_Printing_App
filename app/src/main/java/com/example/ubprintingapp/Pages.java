@@ -1,6 +1,5 @@
 package com.example.ubprintingapp;
 
-import android.graphics.pdf.PdfDocument;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
