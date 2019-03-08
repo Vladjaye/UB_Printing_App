@@ -27,7 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class DistanceEstimate extends FragmentActivity implements
+public class Maps extends FragmentActivity implements
 
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
