@@ -46,7 +46,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class DistanceEstimate extends FragmentActivity implements
+public class Maps extends FragmentActivity implements
 
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
