@@ -1,15 +1,20 @@
 package com.example.ubprintingapp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.DocumentsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
@@ -26,6 +31,20 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import org.apache.http.params.HttpConnectionParams;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class DistanceEstimate extends FragmentActivity implements
 
@@ -39,6 +58,7 @@ public class DistanceEstimate extends FragmentActivity implements
     private LocationRequest locationRequest;
     private Location lastLocation;
     private Marker currentUserLocationMarker;
+     LatLng capen = new LatLng(43.001000, -78.789700);
     private static final int Request_User_Location_Code =99;
 
     @Override
@@ -70,20 +90,27 @@ public class DistanceEstimate extends FragmentActivity implements
         mMap = googleMap;
 
 
-        // getting user's location
 
+
+
+
+        //adding marker on Capen location
+
+            mMap.addMarker(new MarkerOptions().position(capen).title("Capen"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(capen));
+
+        // getting user's location
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED){
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
 
 
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
+
+
+
+
+
         }
     }
 
@@ -136,6 +163,9 @@ public class DistanceEstimate extends FragmentActivity implements
 
     }
 
+
+
+
         @Override
         public void onLocationChanged(Location location) {
         lastLocation = location;
@@ -143,16 +173,83 @@ public class DistanceEstimate extends FragmentActivity implements
             currentUserLocationMarker.remove();
         }
 
-            LatLng latIng = new LatLng(location.getLatitude(), location.getLongitude());
+            LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
             MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latIng);
+            //adding violet marker
+        markerOptions.position(current);
         markerOptions.title("current location");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+
 
         currentUserLocationMarker =mMap.addMarker(markerOptions);
 
 
-        mMap.moveCamera(CameraUpdateFactory.zoomBy(12));
+        mMap.moveCamera(CameraUpdateFactory.zoomBy(18));
+
+
+            String url = "http://maps.googleapis.com/maps/direction/json?"+
+                    "origin="+location.getLatitude() +","+location.getLongitude()+"&"+
+                   "destination=" + capen.latitude +","+ capen.longitude+"&sensor=false&"+"mode=walking";
+
+            HttpURLConnection httpURLConnection = null;
+            String response = "";
+            InputStream input = null;
+
+
+            try{
+                URL urlTemp = new URL(url);
+                httpURLConnection = (HttpURLConnection) urlTemp.openConnection();
+                httpURLConnection.connect();
+
+                //get response
+
+                input = httpURLConnection.getInputStream();
+                InputStreamReader inputStreamReader = new InputStreamReader((input));
+                BufferedReader bufferedReader = new BufferedReader((inputStreamReader));
+
+                StringBuffer stringBuffer = new StringBuffer();
+                String string = "";
+                while((string= bufferedReader.readLine())!=null){
+                    stringBuffer.append(string);
+                }
+
+                response = stringBuffer.toString();
+                bufferedReader.close();
+
+
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            finally {
+
+                if (input != null) {
+                    try {
+                        input.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                httpURLConnection.disconnect();
+            }
+
+
+
+          //      String urlString = "http://maps.google.com/maps?f=d&hl=en&" +"saddr="+location.getLatitude() +","+location.getLongitude()+"&daddr="+capen.latitude +","+ capen.longitude+ "&ie=UTF8&0&om=0&output=kml";
+
+
+
+
+            Polyline line = mMap.addPolyline(new PolylineOptions()
+                    .add(current, capen)
+                    .width(5)
+                    .color(Color.BLUE).geodesic(true));
+
+
+
 
 
         if(googleApiClient!=null){
@@ -163,7 +260,9 @@ public class DistanceEstimate extends FragmentActivity implements
         }
 
 
-        @Override
+
+
+    @Override
         public void onConnected(@Nullable Bundle bundle) {
 
 locationRequest = new LocationRequest();
@@ -179,6 +278,8 @@ if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCAT
 
 
         }
+
+
 
         @Override
         public void onConnectionSuspended(int i) {
