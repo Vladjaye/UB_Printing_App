@@ -8,30 +8,57 @@
     tools:context=".Printing">
 
     <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout_id"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tabIndicatorColor="@color/design_default_color_primary"
         app:tabTextColor="@android:color/white">
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Capen" />
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lockwood" />
+            android:text="Capen"
+            android:id="@+id/capenlayout"
+            />
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TEST" />
+            android:text="Lockwood"
+            android:id="@+id/lockwoodlayout"
+            />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TEST"
+            android:id="@+id/testlayout"
+            />
+
+
+
     </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="0dp"
+        android:layout_height="547dp"
+        android:layout_below="@id/tablayout_id"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tablayout_id" />
+
+
 </android.support.constraint.ConstraintLayout>

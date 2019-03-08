@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">UB Printing App</string>
     <string name="title_activity_distance_estimate">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="eta">ETA</string>
+    <string name="allday">Open 24 Hours</string>
 </resources>
