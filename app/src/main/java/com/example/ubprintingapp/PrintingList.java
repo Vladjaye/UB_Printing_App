@@ -6,24 +6,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
+//Author: Vladyslav Iakusevych
+public class PrintingList extends AppCompatActivity {  //Activity (Window) For Printing Queue Functionality
 
-public class Printing extends AppCompatActivity {
 
-
-     TabLayout tabLayout; //tablayout for tabs
+     TabLayout tabLayout;
      ViewPager viewPager;
      Pages pageadapt;
      TabItem capen;
      TabItem lockwood;
      TabItem test;
 
-     public int finalresult;
 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) { //Window Initialization
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_printing);
 
@@ -65,21 +63,21 @@ public class Printing extends AppCompatActivity {
 
     //Author: Vladyslav Iakusevych
     public int calculatetime(int jobcount) {
-        int maptime = 0; //travel time to library from Google Maps API
+        int maptime = 0; //travel time to library from Google Maps API For now it is 0 - waiting for Maria to finish maps functionality.
         int result = jobcount*10+maptime;
         //10 seconds per page
         //20 seconds per job
         //TODO: for sprint #2 - improve algorithm by counting printing time individually for every page among all jobs
 
       // eta.setText(String.valueOf(result) + " Seconds");
-        finalresult = result;
+
 
         Log.e("ESTIMATE TIME RESULT: ", result + "SECONDS");
         return result;
     }
 
     //Author: Vladyslav Iakusevych
-    public int generatequeue() {
+    public int generatequeue() { //Generates from 1 to 10 for now.
         int random = (int) (Math.random() * 10 + 1);
         return random;
 

@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class PClist extends AppCompatActivity {
+public class PCList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,7 +14,7 @@ public class PClist extends AppCompatActivity {
     }
 
     public void openMapWindow(View view) { //onClick open map activity
-        Intent intent = new Intent(PClist.this, DistanceEstimate.class);
+        Intent intent = new Intent(PCList.this, Maps.class);
         startActivity(intent);
     }
 }

@@ -37,11 +37,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".DistanceEstimate"
+            android:name=".Maps"
             android:label="@string/title_activity_distance_estimate"></activity>
-        <activity android:name=".PClist" />
-        <activity android:name=".Printing" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".PCList" />
+        <activity android:name=".PrintingList" />
+        <activity android:name=".MainMenu">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
