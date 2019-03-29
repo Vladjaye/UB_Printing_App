@@ -73,7 +73,7 @@ public class Maps extends FragmentActivity implements
     private static final int Request_User_Location_Code = 99;
 
     String distance = "";
-
+    String duration = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,7 +170,7 @@ public class Maps extends FragmentActivity implements
         }
     }
 
-//permissions
+    //permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
@@ -341,6 +341,11 @@ public class Maps extends FragmentActivity implements
                         distance = (String)point.get("distance");
 
                         continue;
+
+                        //Getting duration
+                    }else if(b==1){
+                        duration = (String)point.get("duration");
+                        continue;
                     }
 
 
@@ -368,8 +373,8 @@ public class Maps extends FragmentActivity implements
 
                 mMap.addPolyline(lineOptions);
 
-                //checking if distance is working
-
+                //checking if duration and distance are working
+                System.out.println("Duration is " + duration);
                 System.out.println("Distance is " + distance);
 
 
@@ -412,7 +417,7 @@ public class Maps extends FragmentActivity implements
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-           //requesting user location code
+                //requesting user location code
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         Request_User_Location_Code);
