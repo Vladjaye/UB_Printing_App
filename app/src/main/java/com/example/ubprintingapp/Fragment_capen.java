@@ -21,7 +21,15 @@ public class Fragment_capen extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_capen, container,
                 false);
-        TextView eta = (TextView) rootView.findViewById(R.id.textView4);
+        //TextView eta = (TextView) rootView.findViewById(R.id.textView4);
+        try {
+            Bundle gotgift = getArguments();
+            String eta = gotgift.getString("ETA") + " Seconds";
+            TextView etatoshow = rootView.findViewById(R.id.textView4);
+            etatoshow.setText(eta);
+        } catch (NullPointerException nullex){
+            System.out.println("No Data from ETA Algo!");
+        }
 
 
         // Inflate the layout for this fragment

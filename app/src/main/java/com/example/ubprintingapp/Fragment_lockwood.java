@@ -22,6 +22,7 @@ public class Fragment_lockwood extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this
+       // String ETA = getArguments().getString("ETA");
         view = inflater.inflate(R.layout.fragment_lockwood, container, false);
         return view;
     }
