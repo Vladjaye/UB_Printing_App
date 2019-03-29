@@ -28,7 +28,7 @@ public class Parser {
         JSONArray jsonArrayRoutes;
         JSONArray jsonArrayLegs;
         JSONObject jsonObjectDistance;
-     
+        JSONObject jsonObjectDuration;
 
 
         try {
@@ -50,10 +50,14 @@ public class Parser {
                     HashMap<String, String> hashMapDistance = new HashMap<String, String>();
                     hashMapDistance.put("distance", jsonObjectDistance.getString("text"));
 
+                    //get duration
+                    jsonObjectDuration = ((JSONObject) jsonArrayLegs.get(b)).getJSONObject("duration");
+                    HashMap<String, String> hashMapDuration = new HashMap<String, String>();
+                    hashMapDuration.put("duration", jsonObjectDuration.getString("text"));
 
-//I add the distance to the path
+//I add the distance and duration to the path
                     path.add(hashMapDistance);
-
+                    path.add(hashMapDuration);
 
 
 
@@ -126,5 +130,4 @@ public class Parser {
         return Listpoly;
     }
 }
-
 
