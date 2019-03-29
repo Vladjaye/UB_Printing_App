@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
@@ -58,6 +59,10 @@ public class Maps extends FragmentActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+
+
+
+
     private GoogleMap mMap;
     ArrayList<LatLng> MarkerPoints;
     private GoogleApiClient googleApiClient;
@@ -67,11 +72,16 @@ public class Maps extends FragmentActivity implements
     LatLng capen = new LatLng(43.001000, -78.789700);
     private static final int Request_User_Location_Code = 99;
 
+    String distance = "";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_distance_estimate);
+
+
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -124,6 +134,7 @@ public class Maps extends FragmentActivity implements
         markerOptions.position(current);
         markerOptions.title("current location");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+
 
 
 
@@ -203,6 +214,7 @@ public class Maps extends FragmentActivity implements
                 + "origin=" + from.latitude + "," + from.longitude + "&"
                 + "destination=" + to.latitude + "," + to.longitude + "&sensor=false"
                 +"&key=AIzaSyDhGmwGw20pQorGRWQc2tEnrr53HwAkCUU";
+
 
 
         return url;
@@ -310,6 +322,9 @@ public class Maps extends FragmentActivity implements
             ArrayList<LatLng> points;
             PolylineOptions lineOptions = null;
 
+
+
+
             // for all routes
             for (int a = 0; a < result.size(); a++) {
                 points = new ArrayList<>();
@@ -320,13 +335,24 @@ public class Maps extends FragmentActivity implements
                 for (int b = 0; b < path.size(); b++) {
                     HashMap<String, String> point = path.get(b);
 
+
+                    //Getting distance
+                    if(b==0){
+                        distance = (String)point.get("distance");
+
+                        continue;
+                    }
+
+
                     double lat = Double.parseDouble(point.get("lat"));
                     double lng = Double.parseDouble(point.get("lng"));
                     LatLng position = new LatLng(lat, lng);
 
                     points.add(position);
+
                 }
-                    //putting all points together and creating a blue line.
+
+                //putting all points together and creating a blue line.
 
                 lineOptions.addAll(points);
                 lineOptions.width(12);
@@ -335,9 +361,18 @@ public class Maps extends FragmentActivity implements
 
             }
 
+
+
             // Creating a polyline on the map
             if(lineOptions != null) {
+
                 mMap.addPolyline(lineOptions);
+
+                //checking if distance is working
+
+                System.out.println("Distance is " + distance);
+
+
             }
             else {
                 Log.d("onPostExecute","no polyline");

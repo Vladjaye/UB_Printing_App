@@ -1,6 +1,8 @@
 package com.example.ubprintingapp;
 
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -15,6 +17,7 @@ import java.util.List;
 
     public class Parser {
 
+
         //by using JsonObject I'm getting all routes and result will be a list <list> with lat and long
 
         public List<List<HashMap<String,String>>> parse(JSONObject jObject){
@@ -24,6 +27,8 @@ import java.util.List;
             JSONArray jsonArraySteps;
             JSONArray jsonArrayRoutes;
             JSONArray jsonArrayLegs;
+            JSONObject jsonObjectDistance;
+            JSONObject jsonObjectDuration;
 
 
             try {
@@ -37,6 +42,25 @@ import java.util.List;
 
                     //for legs
                     for(int b=0;b<jsonArrayLegs.length();b++){
+
+
+
+                        //Get Distance
+                         jsonObjectDistance = ((JSONObject) jsonArrayLegs.get(b)).getJSONObject("distance");
+                        HashMap<String, String> hashMapDistance = new HashMap<String, String>();
+                        hashMapDistance.put("distance", jsonObjectDistance.getString("text"));
+
+
+//I add the distance to the path
+                        path.add(hashMapDistance);
+
+
+
+
+                        //end new
+
+
+
                         jsonArraySteps = ( (JSONObject)jsonArrayLegs.get(b)).getJSONArray("steps");
 
                         //steps
