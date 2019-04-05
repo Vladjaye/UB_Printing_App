@@ -15,4 +15,4 @@ public class BasicAlgoTest {
 
         assertEquals(100, printactivity.calculatetime(10));
     }
-}
+    }

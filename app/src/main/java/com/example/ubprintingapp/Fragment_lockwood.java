@@ -11,20 +11,18 @@ import android.view.ViewGroup;
 
 import com.example.ubprintingapp.R;
 
-public class Fragment_lockwood extends Fragment {
 
-    View view;
-    public Fragment_lockwood() {
-        // Required empty public constructor
+    public class Fragment_lockwood extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+
+
+            View rootView = inflater.inflate(R.layout.fragment_lockwood, container,
+                    false);
+            return rootView;
+        }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this
-       // String ETA = getArguments().getString("ETA");
-        view = inflater.inflate(R.layout.fragment_lockwood, container, false);
-        return view;
-    }
 
-}
+

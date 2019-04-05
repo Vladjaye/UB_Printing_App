@@ -26,9 +26,14 @@ public class Pages extends FragmentPagerAdapter {
             return capen;
 
             case 1:
-                return new Fragment_lockwood();
+                Fragment_lockwood lockwood = new Fragment_lockwood(); //in order to prevent override of eta, setArguments must be used right after new.
+                lockwood.setArguments(gift);
+                return lockwood;
+
             case 2:
-                return new Fragment_test();
+                Fragment_music music = new Fragment_music(); //in order to prevent override of eta, setArguments must be used right after new.
+                music.setArguments(gift);
+                return music;
                 default:
                     return null;
         }
