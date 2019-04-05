@@ -52,6 +52,9 @@ import java.util.Iterator;
 import java.util.List;
 
 //Author: Maria Anikina
+
+
+
 public class Maps extends FragmentActivity implements
 
         OnMapReadyCallback,
@@ -69,11 +72,19 @@ public class Maps extends FragmentActivity implements
     private LocationRequest locationRequest;
     private Location lastLocation;
     private Marker currentUserLocationMarker;
+
     LatLng capen = new LatLng(43.001000, -78.789700);
+    LatLng lockwood = new LatLng(43.0003, -78.7860);
+    LatLng library = lockwood;
+
+
     private static final int Request_User_Location_Code = 99;
 
     String distance = "";
     String duration = "";
+
+    private String libname;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,11 +112,21 @@ public class Maps extends FragmentActivity implements
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        //we need it for getMaps method
+        //here we are checking which library the user choose to see the duration time and distance.
 
-        //adding marker on Capen location
+        if(libname.equals("capen")){
+            library = capen;
+            //if user choose capen library
+        }else {
+            //lockwood library
+            library = lockwood;
+        }
 
-        mMap.addMarker(new MarkerOptions().position(capen).title("Capen"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(capen));
+        //adding marker on library location
+
+        mMap.addMarker(new MarkerOptions().position(library).title("library"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(library));
 
         mMap.moveCamera(CameraUpdateFactory.zoomBy(12));
 
@@ -143,7 +164,7 @@ public class Maps extends FragmentActivity implements
 
 
         LatLng from = currentUserLocationMarker.getPosition();
-        LatLng to = capen;
+        LatLng to = library;
 
 
         // get url for directions
@@ -383,6 +404,16 @@ public class Maps extends FragmentActivity implements
                 Log.d("onPostExecute","no polyline");
             }
         }
+    }
+
+
+    // method which will return distance and duration (we need it to use the data on others classes)
+    public ArrayList<String> getMaps(String libaryname){
+        ArrayList<String> data = new ArrayList<String>();
+        libname = libaryname;
+        data.add(distance);
+        data.add(duration);
+        return data;
     }
 
 
