@@ -1,6 +1,7 @@
 package com.example.ubprintingapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,10 @@ import com.example.ubprintingapp.R;
 
 
     public class Fragment_lockwood extends Fragment {
+        public void showonmaplockwood(View v){ //onClick open map activity
+            Intent intent = new Intent(getActivity(), Maps.class);
+            startActivity(intent);
+        }
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
