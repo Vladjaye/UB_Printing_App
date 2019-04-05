@@ -15,7 +15,7 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
      Pages pageadapt;
      TabItem capen;
      TabItem lockwood;
-     TabItem test;
+     TabItem music;
 
 
 
@@ -28,7 +28,7 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
 
         capen  = findViewById(R.id.capenlayout);
         lockwood = findViewById(R.id.lockwoodlayout);
-        test = findViewById(R.id.testlayout);
+        music = findViewById(R.id.musiclayout);
 
         tabLayout = (TabLayout) findViewById(R.id.tablayout_id); //get the id of layout
         viewPager = (ViewPager) findViewById(R.id.viewPager); //get the id of viewpager
