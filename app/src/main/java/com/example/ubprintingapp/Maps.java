@@ -83,7 +83,7 @@ public class Maps extends FragmentActivity implements
     String distance = "";
     String duration = "";
 
-    private String libname;
+    private String libname = "";
 
 
     @Override
@@ -122,6 +122,8 @@ public class Maps extends FragmentActivity implements
             //lockwood library
             library = lockwood;
         }
+
+        library = capen;
 
         //adding marker on library location
 
