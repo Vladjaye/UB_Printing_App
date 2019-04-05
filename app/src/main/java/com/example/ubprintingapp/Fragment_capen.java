@@ -1,6 +1,7 @@
 package com.example.ubprintingapp;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,12 @@ import com.example.ubprintingapp.R;
 
 
 public class Fragment_capen extends Fragment {
+    public void showonmapcapen(View v){ //onClick open map activity
+        Intent intent = new Intent(getActivity(), Maps.class);
+        startActivity(intent);
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,6 +36,7 @@ public class Fragment_capen extends Fragment {
         } catch (NullPointerException nullex){
             System.out.println("No Data from ETA Algo!");
         }
+
 
 
 
