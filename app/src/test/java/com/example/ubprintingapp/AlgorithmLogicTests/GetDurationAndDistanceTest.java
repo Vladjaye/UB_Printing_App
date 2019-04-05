@@ -48,7 +48,6 @@ public class GetDurationAndDistanceTest {
         } else {
             test = true;
             assertTrue(test);
-
         }
     }
 }
