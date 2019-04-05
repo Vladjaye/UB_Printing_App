@@ -27,7 +27,7 @@ public class Pages extends FragmentPagerAdapter {
 
             case 1:
                 Fragment_lockwood lockwood = new Fragment_lockwood(); //in order to prevent override of eta, setArguments must be used right after new.
-                lockwood.setArguments(gift);
+              lockwood.setArguments(gift);
                 return lockwood;
 
             case 2:
