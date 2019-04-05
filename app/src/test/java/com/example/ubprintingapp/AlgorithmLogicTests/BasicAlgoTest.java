@@ -1,6 +1,5 @@
 package com.example.ubprintingapp.AlgorithmLogicTests;
 
-
 import com.example.ubprintingapp.PrintingList;
 
 import org.junit.Test;
@@ -15,7 +14,5 @@ public class BasicAlgoTest {
 
 
         assertEquals(100, printactivity.calculatetime(10));
-
-
     }
-}
+    }

@@ -15,7 +15,7 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
      Pages pageadapt;
      TabItem capen;
      TabItem lockwood;
-     TabItem test;
+     TabItem music;
 
 
 
@@ -28,12 +28,15 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
 
         capen  = findViewById(R.id.capenlayout);
         lockwood = findViewById(R.id.lockwoodlayout);
-        test = findViewById(R.id.testlayout);
+        music = findViewById(R.id.musiclayout);
 
         tabLayout = (TabLayout) findViewById(R.id.tablayout_id); //get the id of layout
         viewPager = (ViewPager) findViewById(R.id.viewPager); //get the id of viewpager
 
-        pageadapt = new Pages(getSupportFragmentManager(), tabLayout.getTabCount());
+        Bundle gift = new Bundle(); //To transfer data into Pages.
+        gift.putString("ETA", String.valueOf(calculatetime(generatequeue()))); //For now it is a random ETA time inserted into Bundle
+
+        pageadapt = new Pages(getSupportFragmentManager(), tabLayout.getTabCount(), gift);
         viewPager.setAdapter(pageadapt);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() { //Click listener for tabs
@@ -55,8 +58,10 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout)); //viewpager sync with tablayout tabs
 
-           int queuenumber = generatequeue();
-            calculatetime(queuenumber);
+
+
+
+
 
     }
 
@@ -69,7 +74,9 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
         //20 seconds per job
         //TODO: for sprint #2 - improve algorithm by counting printing time individually for every page among all jobs
 
-      // eta.setText(String.valueOf(result) + " Seconds");
+
+
+
 
 
         Log.e("ESTIMATE TIME RESULT: ", result + "SECONDS");
