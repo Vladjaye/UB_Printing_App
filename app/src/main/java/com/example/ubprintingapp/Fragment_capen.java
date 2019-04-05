@@ -21,6 +21,17 @@ public class Fragment_capen extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_capen, container,
                 false);
+        try {
+            Bundle gotgift = getArguments();
+            String eta = gotgift.getString("ETA") + " Seconds";
+            TextView etatoshow = rootView.findViewById(R.id.textView4);
+            etatoshow.setText(eta);
+        } catch (NullPointerException nullex){
+            System.out.println("No Data from ETA Algo!");
+        }
+
+
+
         return rootView;
     }
 }

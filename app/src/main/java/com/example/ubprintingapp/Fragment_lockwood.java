@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ubprintingapp.R;
 
@@ -20,6 +21,17 @@ import com.example.ubprintingapp.R;
 
             View rootView = inflater.inflate(R.layout.fragment_lockwood, container,
                     false);
+            try {
+                Bundle gotgift = getArguments();
+                String eta = gotgift.getString("ETA") + " Seconds";
+                TextView etatoshow = rootView.findViewById(R.id.textView4);
+                etatoshow.setText(eta);
+            } catch (NullPointerException nullex){
+                System.out.println("No Data from ETA Algo!");
+            }
+
+
+
             return rootView;
         }
     }
