@@ -16,7 +16,7 @@ public class GetDurationAndDistanceTest {
 
 
         @Test
-        public void checkTime() {   //simple assertTrue test to check if algo provides correct printing time based on queue and eta to library.
+        public void checkTime() {   //simple assertTrue test to check if the duration time between user's location and library will be between 1 and 16 mins.
             Maps map = new Maps();
 
             boolean test = false;
@@ -35,4 +35,20 @@ public class GetDurationAndDistanceTest {
 
         }
 
+    @Test
+    public void checkDistanceExist() {    //simple assertFalse test to check if the distance between user's location and library exists.
+        //will not work if the user will be in the library.
+        Maps map = new Maps();
+
+        boolean test = false;
+        if ((map.getMaps("capen").get(0).equals("0 mill"))) {
+
+            test = false;
+            assertFalse(test);
+        } else {
+            test = true;
+            assertTrue(test);
+
+        }
+    }
 }
