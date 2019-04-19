@@ -5,6 +5,8 @@ import com.example.ubprintingapp.PrintingList;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import com.google.common.truth.TruthJUnit;
+
 
 
 public class BasicAlgoTest {
