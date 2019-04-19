@@ -9,16 +9,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ubprintingapp.R;
 
 
 public class Fragment_capen extends Fragment {
-    public void showonmapcapen(View v){ //onClick open map activity
+
+    public void showonmapcapen(){ //onClick open map activity
         Intent intent = new Intent(getActivity(), Maps.class);
         startActivity(intent);
     }
+
 
 
     @Override
@@ -26,7 +29,7 @@ public class Fragment_capen extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        View rootView = inflater.inflate(R.layout.fragment_capen, container,
+        final View rootView = inflater.inflate(R.layout.fragment_capen, container,
                 false);
         try {
             Bundle gotgift = getArguments();
@@ -37,7 +40,15 @@ public class Fragment_capen extends Fragment {
             System.out.println("No Data from ETA Algo!");
         }
 
+        Button capenbutton =  rootView.findViewById(R.id.capbutton);
+        capenbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showonmapcapen();
+            }
+        }
 
+        );
 
 
         return rootView;

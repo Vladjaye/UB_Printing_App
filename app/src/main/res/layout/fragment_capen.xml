@@ -99,7 +99,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/capbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -107,7 +107,7 @@
         android:layout_marginRight="8dp"
         android:onClick="showonmapcapen"
         android:text="Show on map"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
         tools:layout_editor_absoluteY="443dp" />
 
 </FrameLayout>
