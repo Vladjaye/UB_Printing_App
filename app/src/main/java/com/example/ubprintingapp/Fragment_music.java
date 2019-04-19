@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ubprintingapp.R;
 
 public class Fragment_music extends Fragment {
     public void showonmapmusic(View v){ //onClick open map activity

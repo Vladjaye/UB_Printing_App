@@ -41,7 +41,7 @@ public class GetDurationAndDistanceTest {
         Maps map = new Maps();
 
         boolean test = false;
-        if ((map.getMaps("capen").get(0).equals("0 mill"))) {
+        if ((map.getMaps("capen").get(0).equals("0 mi"))) {
 
             test = false;
             assertFalse(test);
