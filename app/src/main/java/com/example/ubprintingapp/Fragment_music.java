@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ubprintingapp.R;
 
 public class Fragment_music extends Fragment {
 

@@ -30,6 +30,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -134,6 +135,19 @@ public class Maps extends FragmentActivity implements
 
         // need for user's location
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+
+
+            //Creating Camera Position
+            CameraPosition camerap = new CameraPosition.Builder()
+                    //Adding target which helps me to show the library position using latitude and longitude
+                    .target(new LatLng(library.latitude, library.longitude))
+                    //adding zoom and camera position to the Builder
+                    .zoom(14).build();
+
+            // Creating animate Camera which will helps me to show right away position of library on the map
+            // Adding camera position on the map using animateCamera
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(camerap));
 
 
             buildGoogleApiClient();
