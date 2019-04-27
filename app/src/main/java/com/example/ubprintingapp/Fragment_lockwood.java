@@ -21,6 +21,9 @@ import com.example.ubprintingapp.R;
             b.putInt("key", 2);
             intent.putExtras(b);
             startActivity(intent);
+            Intent asback = new Intent();
+            asback.setAction("ok");
+
         }
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,

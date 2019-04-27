@@ -23,8 +23,8 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 public class MainMenu {
 
     private String stringToBetyped;
-
-   /* @Rule
+/*
+   @Rule
     public ActivityTestRule<MainMenu> activityRule  = new ActivityTestRule<>(MainMenu.class);
 
     @Before
