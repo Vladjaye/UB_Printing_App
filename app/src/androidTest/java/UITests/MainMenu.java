@@ -13,18 +13,14 @@ import androidx.test.filters.LargeTest;
 import androidx.test.runner.AndroidJUnit4;
 
 import static android.support.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.typeText;
 
-
-@RunWith(AndroidJUnit4.class)
 @LargeTest
 
 public class MainMenu {
 
-    private String stringToBetyped;
-/*
-   @Rule
+
+
+  /* @Rule
     public ActivityTestRule<MainMenu> activityRule  = new ActivityTestRule<>(MainMenu.class);
 
     @Before
@@ -36,8 +32,8 @@ public class MainMenu {
     @Test
     public void changeText_sameActivity() {
         // Type text and then press the button.
-        onView(withId(R.id.editTextUserInput))
-                .perform(typeText(stringToBetyped), closeSoftKeyboard());
+        main
+                .perform(click);
         onView(withId(R.id.changeTextBt)).perform(click());
 
         // Check that the text was changed.

@@ -24,7 +24,7 @@ public class Fragment_capen extends Fragment {
         Bundle b = new Bundle();
         b.putInt("key", 1);
         intent.putExtras(b);
-        startActivity(intent);
+      startActivity(intent);
 
     }
 
@@ -39,7 +39,8 @@ public class Fragment_capen extends Fragment {
                 false);
         try {
             Bundle gotgift = getArguments();
-            String eta = gotgift.getString("Capen") + " Seconds";
+           // String eta = gotgift.getString("Capen") + " Seconds";
+            String eta = minutesformat(Integer.valueOf(gotgift.getString("Capen")));
             TextView etatoshow = rootView.findViewById(R.id.textView4);
             etatoshow.setText(eta);
             TextView inkchangeactive = rootView.findViewById(R.id.textView51);
@@ -74,5 +75,13 @@ public class Fragment_capen extends Fragment {
         else{
             return false;
         }
+    }
+
+    public String minutesformat(int seconds){
+        String time;
+        int secs = seconds %60;
+        int mins = seconds /60;
+        time ="" + mins + " Minute(s) " + secs + " Second(s)";
+                return time;
     }
 }

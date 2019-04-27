@@ -85,15 +85,18 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
 
         //10 seconds per page
         //20 seconds per job
-        //TODO: for sprint #2 - improve algorithm by counting printing time individually for every page among all jobs
             try{
                 Intent intent = new Intent(this, Maps.class);
-                startService(intent);
+               // startActivity(intent);
+
                Bundle temp =  intent.getExtras();
                if (library == 1) {
                    capendist = temp.getString("dist");
                    capentime = temp.getString("time");
-                   int result = jobcount*10 + Integer.valueOf(capentime);
+
+                   String[] subst = capentime.split(" ");
+
+                   int result = jobcount*10 + Integer.valueOf(subst[0]);
                    Log.e("ESTIMATE TIME RESULT: ", result + "SECONDS");
                    return result;
 
@@ -116,15 +119,14 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
             }catch (Exception badmapdtime){}
 
         //int maptime = 0; //travel time to library from Google Maps API For now it is 0 - waiting for Maria to finish maps functionality.
-        return -1;
+        return jobcount * 10;
     }
 
     //Author: Vladyslav Iakusevych
-    public int generatequeue() { //Generates from 1 to 10 for now.
-        int random = (int) (Math.random() * 10 + 1);
+    public int generatequeue() { //Random.
+        int random = (int) (Math.random() * 90 + 1);
         return random;
 
         //TODO: Rewrite it for individual pages algorithm
     }
-
 }

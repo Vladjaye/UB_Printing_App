@@ -30,7 +30,8 @@ public class Fragment_music extends Fragment {
                 false);
         try {
             Bundle gotgift = getArguments();
-            String eta = gotgift.getString("Music") + " Seconds";
+           // String eta = gotgift.getString("Music") + " Seconds";
+            String eta = minutesformat(Integer.valueOf(gotgift.getString("Music")));
             TextView etatoshow = rootView.findViewById(R.id.textView4);
             etatoshow.setText(eta);
             TextView inkchangeactive = rootView.findViewById(R.id.textView53);
@@ -63,5 +64,12 @@ public class Fragment_music extends Fragment {
         else{
             return false;
         }
+    }
+    public String minutesformat(int seconds){
+        String time;
+        int secs = seconds %60;
+        int mins = seconds /60;
+        time ="" + mins + " Minute(s) " + secs + " Second(s)";
+        return time;
     }
 }

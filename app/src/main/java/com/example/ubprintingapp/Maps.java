@@ -133,10 +133,6 @@ public class Maps extends FragmentActivity implements
         }
 
 
-        else {
-            library = capen;
-        }
-
         //adding marker on library location
 
         mMap.addMarker(new MarkerOptions().position(library).title("library"));
