@@ -34,7 +34,7 @@ import com.example.ubprintingapp.R;
                     false);
             try {
                 Bundle gotgift = getArguments();
-                String eta = gotgift.getString("ETA") + " Seconds";
+                String eta = gotgift.getString("Lock") + " Seconds";
                 TextView etatoshow = rootView.findViewById(R.id.textView4);
                 etatoshow.setText(eta);
             } catch (NullPointerException nullex){

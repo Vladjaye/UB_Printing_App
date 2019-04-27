@@ -23,6 +23,7 @@ public class Fragment_capen extends Fragment {
         b.putInt("key", 1);
         intent.putExtras(b);
         startActivity(intent);
+
     }
 
 
@@ -36,7 +37,7 @@ public class Fragment_capen extends Fragment {
                 false);
         try {
             Bundle gotgift = getArguments();
-            String eta = gotgift.getString("ETA") + " Seconds";
+            String eta = gotgift.getString("Capen") + " Seconds";
             TextView etatoshow = rootView.findViewById(R.id.textView4);
             etatoshow.setText(eta);
         } catch (NullPointerException nullex){

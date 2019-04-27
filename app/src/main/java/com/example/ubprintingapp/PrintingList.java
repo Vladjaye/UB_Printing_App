@@ -1,5 +1,6 @@
 package com.example.ubprintingapp;
 
+import android.content.Intent;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -18,6 +19,13 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
      TabItem music;
 
 
+    private String capendist;
+    private String capentime;
+    private String lockdist;
+    private String locktime;
+    private String musicdist;
+    private String musictime;
+
 
 
     @Override
@@ -34,7 +42,10 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
         viewPager = (ViewPager) findViewById(R.id.viewPager); //get the id of viewpager
 
         Bundle gift = new Bundle(); //To transfer data into Pages.
-        gift.putString("ETA", String.valueOf(calculatetime(generatequeue()))); //For now it is a random ETA time inserted into Bundle
+        //gift.putString("ETA", String.valueOf(calculatetime(generatequeue()))); //For now it is a random ETA time inserted into Bundle
+        gift.putString("Capen", String.valueOf(calculatetime(generatequeue(), 1))); //Capen Data
+        gift.putString("Lock", String.valueOf(calculatetime(generatequeue(), 2))); //Lockwood Data
+        gift.putString("Music", String.valueOf(calculatetime(generatequeue(), 3))); //Music Data
 
         pageadapt = new Pages(getSupportFragmentManager(), tabLayout.getTabCount(), gift);
         viewPager.setAdapter(pageadapt);
@@ -67,20 +78,42 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
 
 
     //Author: Vladyslav Iakusevych
-    public int calculatetime(int jobcount) {
-        int maptime = 0; //travel time to library from Google Maps API For now it is 0 - waiting for Maria to finish maps functionality.
-        int result = jobcount*10+maptime;
+    public int calculatetime(int jobcount, int library) {
+
         //10 seconds per page
         //20 seconds per job
         //TODO: for sprint #2 - improve algorithm by counting printing time individually for every page among all jobs
+            try{
+                Intent intent = new Intent(this, Maps.class);
+                startActivityForResult(intent, library);
+               Bundle temp =  intent.getExtras();
+               if (library == 1) {
+                   capendist = temp.getString("dist");
+                   capentime = temp.getString("time");
+                   int result = jobcount*10 + Integer.valueOf(capentime);
+                   Log.e("ESTIMATE TIME RESULT: ", result + "SECONDS");
+                   return result;
 
+               }
+                if (library == 2) {
+                    capendist = temp.getString("dist");
+                    capentime = temp.getString("time");
+                    int result = jobcount*10 + Integer.valueOf(locktime);
+                    Log.e("ESTIMATE TIME RESULT: ", result + "SECONDS");
+                    return result;
+                }
+                if (library == 3) {
+                    capendist = temp.getString("dist");
+                    capentime = temp.getString("time");
+                    int result = jobcount*10 + Integer.valueOf(musictime);
+                    Log.e("ESTIMATE TIME RESULT: ", result + "SECONDS");
+                    return result;
+                }
 
+            }catch (Exception badmapdtime){}
 
-
-
-
-        Log.e("ESTIMATE TIME RESULT: ", result + "SECONDS");
-        return result;
+        //int maptime = 0; //travel time to library from Google Maps API For now it is 0 - waiting for Maria to finish maps functionality.
+        return -1;
     }
 
     //Author: Vladyslav Iakusevych
