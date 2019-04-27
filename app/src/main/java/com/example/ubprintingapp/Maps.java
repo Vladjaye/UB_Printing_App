@@ -132,7 +132,10 @@ public class Maps extends FragmentActivity implements
             //music library
         }
 
-        library = capen;
+
+        else {
+            library = capen;
+        }
 
         //adding marker on library location
 
