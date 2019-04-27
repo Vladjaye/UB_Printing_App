@@ -17,7 +17,13 @@ import com.example.ubprintingapp.R;
     public class Fragment_lockwood extends Fragment {
         public void showonmaplockwood(View v){ //onClick open map activity
             Intent intent = new Intent(getActivity(), Maps.class);
+            Bundle b = new Bundle();
+            b.putInt("key", 2);
+            intent.putExtras(b);
             startActivity(intent);
+            Intent asback = new Intent();
+            asback.setAction("ok");
+
         }
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,

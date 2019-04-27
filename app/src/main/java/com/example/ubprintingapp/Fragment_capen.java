@@ -19,6 +19,9 @@ public class Fragment_capen extends Fragment {
 
     public void showonmapcapen(){ //onClick open map activity
         Intent intent = new Intent(getActivity(), Maps.class);
+        Bundle b = new Bundle();
+        b.putInt("key", 1);
+        intent.putExtras(b);
         startActivity(intent);
     }
 

@@ -13,6 +13,9 @@ import com.example.ubprintingapp.R;
 public class Fragment_music extends Fragment {
     public void showonmapmusic(View v){ //onClick open map activity
         Intent intent = new Intent(getActivity(), Maps.class);
+        Bundle b = new Bundle();
+        b.putInt("key", 3);
+        intent.putExtras(b);
         startActivity(intent);
     }
     @Override
