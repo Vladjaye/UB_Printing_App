@@ -1,6 +1,7 @@
 package com.example.ubprintingapp;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -435,11 +436,11 @@ public class Maps extends FragmentActivity implements
     @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {
 
-
         // Make sure the request was successful
         if (resultCode == RESULT_OK) {
 
-            GoogleMap googleMap;
+
+            //If capen library
             if (requestCode == 1) {
 
                 value = 1;
@@ -450,8 +451,17 @@ public class Maps extends FragmentActivity implements
 
                 data.add(distance);
                 data.add(duration);
+
+
+                //sending data to PrintingList Class
+                Intent intent = new Intent(this, PrintingList.class);
+                intent.putExtra("data", data);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+
             }
 
+            //if lockwood library
             if (requestCode == 2) {
 
                 value = 2;
@@ -461,8 +471,15 @@ public class Maps extends FragmentActivity implements
 
                 data.add(distance);
                 data.add(duration);
+
+                //sending data to PrintingList Class
+                Intent intent = new Intent(this, PrintingList.class);
+                intent.putExtra("data", data);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
 
+            //if music library
             if (requestCode == 3) {
 
                 value = 3;
@@ -472,9 +489,19 @@ public class Maps extends FragmentActivity implements
 
                 data.add(distance);
                 data.add(duration);
+
+
+                //sending data to PrintingList Class
+                Intent intent = new Intent(this, PrintingList.class);
+                intent.putExtra("data", data);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
         }
 
+
+
+        //if result code in not ok
             else {
                 Toast.makeText(this, "Wrong", Toast.LENGTH_SHORT).show();
                }
