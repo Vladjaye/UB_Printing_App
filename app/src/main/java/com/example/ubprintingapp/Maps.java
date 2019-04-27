@@ -3,20 +3,19 @@ package com.example.ubprintingapp;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.provider.DocumentsContract;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
@@ -28,16 +27,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -45,11 +41,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 //Author: Maria Anikina
@@ -76,6 +70,7 @@ public class Maps extends FragmentActivity implements
 
     LatLng capen = new LatLng(43.001000, -78.789700);
     LatLng lockwood = new LatLng(43.0003, -78.7860);
+    LatLng music = new LatLng(43.0001, -78.7846);
     LatLng library = lockwood;
 
 
@@ -84,12 +79,19 @@ public class Maps extends FragmentActivity implements
     String distance = "";
     String duration = "";
 
-    private String libname = "";
+    private int value;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+       //Creating a bundle and taking the data
+        //from others classes
+        Bundle box = getIntent().getExtras();
+        value = -1; //number does not matter for now
+        if(box != null) {  //checking if this bundle exists and it is not empty
+            value = box.getInt("key"); //making value equal to the parameter from another class
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_distance_estimate);
 
@@ -116,12 +118,17 @@ public class Maps extends FragmentActivity implements
         //we need it for getMaps method
         //here we are checking which library the user choose to see the duration time and distance.
 
-        if(libname.equals("capen")){
+        if(value == 1){
             library = capen;
             //if user choose capen library
-        }else {
+        }
+        if ( value ==2){
             //lockwood library
             library = lockwood;
+        }
+        if (value ==3){
+            library = music;
+            //music library
         }
 
         library = capen;
@@ -423,10 +430,64 @@ public class Maps extends FragmentActivity implements
     }
 
 
+
+
+    @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {
+
+
+        // Make sure the request was successful
+        if (resultCode == RESULT_OK) {
+
+            GoogleMap googleMap;
+            if (requestCode == 1) {
+
+                value = 1;
+                //this.onMapReady(googleMap);
+                // this.onMapReady(GoogleMap googleMap);
+
+                ArrayList<String> data = new ArrayList<String>();
+
+                data.add(distance);
+                data.add(duration);
+            }
+
+            if (requestCode == 2) {
+
+                value = 2;
+                //  this.onMapReady(GoogleMap googleMap);
+
+                ArrayList<String> data = new ArrayList<String>();
+
+                data.add(distance);
+                data.add(duration);
+            }
+
+            if (requestCode == 3) {
+
+                value = 3;
+                //  this.onMapReady(GoogleMap googleMap);
+
+                ArrayList<String> data = new ArrayList<String>();
+
+                data.add(distance);
+                data.add(duration);
+            }
+        }
+
+            else {
+                Toast.makeText(this, "Wrong", Toast.LENGTH_SHORT).show();
+               }
+        }
+
+
+
+
+
     // method which will return distance and duration (we need it to use the data on others classes)
     public ArrayList<String> getMaps(String libaryname){
         ArrayList<String> data = new ArrayList<String>();
-        libname = libaryname;
+     //   libname = libaryname;
         data.add(distance);
         data.add(duration);
         return data;
