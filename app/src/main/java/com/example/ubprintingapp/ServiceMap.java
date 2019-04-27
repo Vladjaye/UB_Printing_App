@@ -265,8 +265,11 @@ public class ServiceMap extends Service implements
         String url = gettingUrl(from, to);
 
         //download data from google
-        Maps.FetchUrl FetchUrl = new Maps.FetchUrl();
-       FetchUrl.execute(url);
+
+
+        
+      //  Maps.FetchUrl FetchUrl = new Maps.FetchUrl();
+      // FetchUrl.execute(url);
 
     }
 
