@@ -1,6 +1,8 @@
 package com.example.ubprintingapp;
 
+
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -46,11 +48,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-//Author: Maria Anikina
 
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.util.Log;
 
+import static android.app.Activity.RESULT_OK;
 
-public class Maps extends FragmentActivity implements
+public class ServiceMap extends Service implements
 
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -82,54 +88,120 @@ public class Maps extends FragmentActivity implements
     private int value;
 
 
+
+    private static final String TAG = "ServiceMap";
+
+    private boolean isRunning  = false;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate() {
 
-        //Creating a bundle and taking the data
-        //from others classes
-        Bundle box = getIntent().getExtras();
+                Log.i(TAG, "Service onCreate");
+
+        isRunning = true;
+
+
+
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+
+
+            super.onStartCommand(intent, flags, startId);
+            Bundle bundle = intent.getExtras();
+
+
+
         value = -1; //number does not matter for now
-        if(box != null) {  //checking if this bundle exists and it is not empty
-            value = box.getInt("key"); //making value equal to the parameter from another class
+        if(bundle != null) {  //checking if this bundle exists and it is not empty
+            value = bundle.getInt("key"); //making value equal to the parameter from another class
         }
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_distance_estimate);
+        //super.onCreate(savedInstanceState);
+        // setContentView(R.layout.activity_distance_estimate);
 
-
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkLocationPermission();
-        }
         // Initializing
         MarkerPoints = new ArrayList<>();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-    }
+        //   SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        //            .findFragmentById(R.id.map);
+        //  mapFragment.getMapAsync(this);
 
-
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        //we need it for getMaps method
         //here we are checking which library the user choose to see the duration time and distance.
 
         if(value == 1){
             library = capen;
             //if user choose capen library
         }
-        if ( value ==2){
+        if (value == 2){
             //lockwood library
             library = lockwood;
         }
-        if (value ==3){
+
+        if (value == 3){
             library = music;
             //music library
         }
+
+
+        Log.i(TAG, "Service onStartCommand");
+
+
+
+        //Creating new thread for my service
+        //Always write your long running tasks in a separate thread, to avoid ANR
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                //Your logic that service will perform will be placed here
+                //In this example we are just looping and waits for 1000 milliseconds in each loop.
+
+
+
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                    }
+
+                    if(isRunning){
+                        Log.i(TAG, "Service running");
+                    }
+
+
+                //Stop service once it finishes its task
+                stopSelf();
+            }
+        }).start();
+
+        return Service.START_STICKY;
+    }
+
+
+    @Override
+    public IBinder onBind(Intent arg0) {
+        Log.i(TAG, "Service onBind");
+        return null;
+    }
+
+    @Override
+    public void onDestroy() {
+
+        isRunning = false;
+
+        Log.i(TAG, "Service onDestroy");
+    }
+
+
+
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
 
 
         //adding marker on library location
@@ -193,47 +265,13 @@ public class Maps extends FragmentActivity implements
         String url = gettingUrl(from, to);
 
         //download data from google
-        FetchUrl FetchUrl = new FetchUrl();
-        FetchUrl.execute(url);
+        Maps.FetchUrl FetchUrl = new Maps.FetchUrl();
+       FetchUrl.execute(url);
 
     }
 
 
 
-    public boolean checkUserLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Request_User_Location_Code);
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Request_User_Location_Code);
-            }
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    //permissions
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        switch (requestCode) {
-            case Request_User_Location_Code:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                        if (googleApiClient == null) {
-                            buildGoogleApiClient();
-                        }
-                        mMap.setMyLocationEnabled(true);
-                    }
-                } else {
-                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-                }
-                return;
-        }
-
-    }
 
 
     //creating API client
@@ -298,147 +336,134 @@ public class Maps extends FragmentActivity implements
         return data;
     }
 
-    // Taking and placing data from URL
-    private class FetchUrl extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... url) {
-
-            // String where I will put data from url
-            String stringUrlData = "";
-
-
-            // Taking data from url
-            try {
-                stringUrlData = downloadUrl(url[0]);
-                Log.d("Background Task data", stringUrlData.toString());
-            } catch (Exception e) {
-                Log.d("Background Task", e.toString());
-            }
-            return stringUrlData;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            PTask pTask = new PTask();
-            pTask.execute(result);
-
-
-
-        }
-    }
-
-    // This is a class which is helping to place locations in right format
-    //I need it for creating direction on the map
-
-    private class PTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
-
-        @Override
-        protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
-
-            JSONObject jObject;
-            List<List<HashMap<String, String>>> routes = null;
-
-            try {
-                jObject = new JSONObject(jsonData[0]);
-                Log.d("ParserTask",jsonData[0].toString());
-                Parser parser = new Parser();
-                Log.d("ParserTask", parser.toString());
-
-
-                //start parsing from here
-                routes = parser.parse(jObject);
-                Log.d("ParserTask","Executing routes");
-                Log.d("ParserTask",routes.toString());
-
-            } catch (Exception e) {
-
-            }
-            return routes;
-        }
-
-        // Need after parsing
-        @Override
-        protected void onPostExecute(List<List<HashMap<String, String>>> result) {
-            ArrayList<LatLng> points;
-            PolylineOptions lineOptions = null;
-
-
-
-
-            // for all routes
-            for (int a = 0; a < result.size(); a++) {
-                points = new ArrayList<>();
-                lineOptions = new PolylineOptions();
-                List<HashMap<String, String>> path = result.get(a);
-
-                // for all points
-                for (int b = 0; b < path.size(); b++) {
-                    HashMap<String, String> point = path.get(b);
-
-
-                    //Getting distance
-                    if(b==0){
-                        distance = (String)point.get("distance");
-
-                        continue;
-
-                        //Getting duration
-                    }else if(b==1){
-                        duration = (String)point.get("duration");
-                        continue;
-                    }
-
-
-                    double lat = Double.parseDouble(point.get("lat"));
-                    double lng = Double.parseDouble(point.get("lng"));
-                    LatLng position = new LatLng(lat, lng);
-
-                    points.add(position);
-
-                }
-
-                //putting all points together and creating a blue line.
-
-                lineOptions.addAll(points);
-                lineOptions.width(12);
-                lineOptions.color(Color.BLUE);
-
-
-            }
-
-
-
-            // Creating a polyline on the map
-            if(lineOptions != null) {
-
-                mMap.addPolyline(lineOptions);
-
-                //checking if duration and distance are working
-                System.out.println("Duration is " + duration);
-                System.out.println("Distance is " + distance);
-
-
-            }
-            else {
-                Log.d("onPostExecute","no polyline");
-            }
-        }
-    }
-
-
-
+// Taking and placing data from URL
+private class FetchUrl extends AsyncTask<String, Void, String> {
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {
+    protected String doInBackground(String... url) {
 
+        // String where I will put data from url
+        String stringUrlData = "";
+
+
+        // Taking data from url
+        try {
+            stringUrlData = downloadUrl(url[0]);
+            Log.d("Background Task data", stringUrlData.toString());
+        } catch (Exception e) {
+            Log.d("Background Task", e.toString());
+        }
+        return stringUrlData;
+    }
+
+
+}
+
+// This is a class which is helping to place locations in right format
+//I need it for creating direction on the map
+
+private class PTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
+
+    @Override
+    protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
+
+        JSONObject jObject;
+        List<List<HashMap<String, String>>> routes = null;
+
+        try {
+            jObject = new JSONObject(jsonData[0]);
+            Log.d("ParserTask",jsonData[0].toString());
+            Parser parser = new Parser();
+            Log.d("ParserTask", parser.toString());
+
+
+            //start parsing from here
+            routes = parser.parse(jObject);
+            Log.d("ParserTask","Executing routes");
+            Log.d("ParserTask",routes.toString());
+
+        } catch (Exception e) {
+
+        }
+        return routes;
+    }
+
+    // Need after parsing
+    @Override
+    protected void onPostExecute(List<List<HashMap<String, String>>> result) {
+        ArrayList<LatLng> points;
+        PolylineOptions lineOptions = null;
+
+
+
+
+        // for all routes
+        for (int a = 0; a < result.size(); a++) {
+            points = new ArrayList<>();
+            lineOptions = new PolylineOptions();
+            List<HashMap<String, String>> path = result.get(a);
+
+            // for all points
+            for (int b = 0; b < path.size(); b++) {
+                HashMap<String, String> point = path.get(b);
+
+
+                //Getting distance
+                if(b==0){
+                    distance = (String)point.get("distance");
+
+                    continue;
+
+                    //Getting duration
+                }else if(b==1){
+                    duration = (String)point.get("duration");
+                    continue;
+                }
+
+
+                double lat = Double.parseDouble(point.get("lat"));
+                double lng = Double.parseDouble(point.get("lng"));
+                LatLng position = new LatLng(lat, lng);
+
+                points.add(position);
+
+            }
+
+            //putting all points together and creating a blue line.
+
+            lineOptions.addAll(points);
+            lineOptions.width(12);
+            lineOptions.color(Color.BLUE);
+
+
+        }
+
+
+
+        // Creating a polyline on the map
+        if(lineOptions != null) {
+
+            mMap.addPolyline(lineOptions);
+
+            //checking if duration and distance are working
+            System.out.println("Duration is " + duration);
+            System.out.println("Distance is " + distance);
+
+
+        }
+        else {
+            Log.d("onPostExecute","no polyline");
+        }
+    }
+}
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent resultIntent) {
 
         // Make sure the request was successful
         if (resultCode == RESULT_OK) {
 
-            GoogleMap googleMap;
+
+            //If capen library
             if (requestCode == 1) {
 
                 value = 1;
@@ -449,8 +474,17 @@ public class Maps extends FragmentActivity implements
 
                 data.add(distance);
                 data.add(duration);
+
+
+                //sending data to PrintingList Class
+                Intent intent = new Intent(this, PrintingList.class);
+                intent.putExtra("data", data);
+                setResult(RESULT_OK, intent);
+                finish();
+
             }
 
+            //if lockwood library
             if (requestCode == 2) {
 
                 value = 2;
@@ -460,8 +494,15 @@ public class Maps extends FragmentActivity implements
 
                 data.add(distance);
                 data.add(duration);
+
+                //sending data to PrintingList Class
+                Intent intent = new Intent(this, PrintingList.class);
+                intent.putExtra("data", data);
+                setResult(RESULT_OK, intent);
+                finish();
             }
 
+            //if music library
             if (requestCode == 3) {
 
                 value = 3;
@@ -471,16 +512,30 @@ public class Maps extends FragmentActivity implements
 
                 data.add(distance);
                 data.add(duration);
+
+
+                //sending data to PrintingList Class
+                Intent intent = new Intent(this, PrintingList.class);
+                intent.putExtra("data", data);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         }
 
+
+
+        //if result code in not ok
         else {
             Toast.makeText(this, "Wrong", Toast.LENGTH_SHORT).show();
         }
     }
 
+    private void finish() {
 
+    }
 
+    private void setResult(int resultOk, Intent intent) {
+    }
 
 
     // method which will return distance and duration (we need it to use the data on others classes)
@@ -514,38 +569,11 @@ public class Maps extends FragmentActivity implements
 
     }
 
-
-    public boolean checkLocationPermission(){
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // checking location permission
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                //requesting user location code
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        Request_User_Location_Code);
-
-
-            } else {
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        Request_User_Location_Code);
-            }
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     @Override
     public void onConnectionSuspended(int i) {
 
     }
+
 
 
 
