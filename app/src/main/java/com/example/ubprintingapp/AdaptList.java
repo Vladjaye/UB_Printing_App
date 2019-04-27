@@ -1,5 +1,7 @@
 package com.example.ubprintingapp;
 
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -32,6 +34,7 @@ public class AdaptList extends RecyclerView.Adapter<AdaptList.MyViewHolder> {
         // create a new view
         TextView v = (TextView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.support_simple_spinner_dropdown_item, parent, false);
+        v.setTextColor(Color.parseColor("#FFFFFF"));
 
 
 
