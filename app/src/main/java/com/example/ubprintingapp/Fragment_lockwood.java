@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ubprintingapp.R;
@@ -21,8 +22,6 @@ import com.example.ubprintingapp.R;
             b.putInt("key", 2);
             intent.putExtras(b);
             startActivity(intent);
-            Intent asback = new Intent();
-            asback.setAction("ok");
 
         }
         @Override
@@ -41,6 +40,14 @@ import com.example.ubprintingapp.R;
                 System.out.println("No Data from ETA Algo!");
             }
 
+            Button lockbutton =  rootView.findViewById(R.id.lockbutton);
+            lockbutton.setOnClickListener(new View.OnClickListener() {
+                                               @Override
+                                               public void onClick(View v) {
+                                                   showonmaplockwood(v);
+                                               }
+                                           }
+            );
 
 
             return rootView;

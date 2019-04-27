@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ubprintingapp.R;
@@ -34,6 +35,14 @@ public class Fragment_music extends Fragment {
             System.out.println("No Data from ETA Algo!");
         }
 
+        Button musicbutton =  rootView.findViewById(R.id.musicbutton);
+        musicbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showonmapmusic(v);
+            }
+            }
+            );
 
 
         return rootView;

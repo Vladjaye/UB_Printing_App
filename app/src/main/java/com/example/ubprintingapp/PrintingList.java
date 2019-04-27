@@ -85,7 +85,7 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
         //TODO: for sprint #2 - improve algorithm by counting printing time individually for every page among all jobs
             try{
                 Intent intent = new Intent(this, Maps.class);
-                startActivityForResult(intent, library);
+                startService(intent);
                Bundle temp =  intent.getExtras();
                if (library == 1) {
                    capendist = temp.getString("dist");
