@@ -14,8 +14,10 @@ import android.widget.TextView;
 
 import com.example.ubprintingapp.R;
 
+import java.util.Random;
 
-    public class Fragment_lockwood extends Fragment {
+
+public class Fragment_lockwood extends Fragment {
         public void showonmaplockwood(View v){ //onClick open map activity
             Intent intent = new Intent(getActivity(), Maps.class);
             Bundle b = new Bundle();
@@ -36,6 +38,10 @@ import com.example.ubprintingapp.R;
                 String eta = gotgift.getString("Lock") + " Seconds";
                 TextView etatoshow = rootView.findViewById(R.id.textView4);
                 etatoshow.setText(eta);
+                TextView inkchangeactive = rootView.findViewById(R.id.textView52);
+                if (generateink() == true){
+                    inkchangeactive.setText("INK CHANGE IN PROGRESS");
+                }
             } catch (NullPointerException nullex){
                 System.out.println("No Data from ETA Algo!");
             }
@@ -52,6 +58,16 @@ import com.example.ubprintingapp.R;
 
             return rootView;
         }
+    public boolean generateink(){
+        Random rand = new Random();
+        int random =  rand.nextInt(6);
+        if (random == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     }
 
 

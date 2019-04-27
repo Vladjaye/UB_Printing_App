@@ -7,6 +7,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
+import java.util.Random;
+
 //Author: Vladyslav Iakusevych
 public class PrintingList extends AppCompatActivity {  //Activity (Window) For Printing Queue Functionality
 
@@ -123,4 +126,5 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
 
         //TODO: Rewrite it for individual pages algorithm
     }
+
 }

@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.example.ubprintingapp.R;
 
+import java.util.Random;
+
 public class Fragment_music extends Fragment {
     public void showonmapmusic(View v){ //onClick open map activity
         Intent intent = new Intent(getActivity(), Maps.class);
@@ -31,6 +33,10 @@ public class Fragment_music extends Fragment {
             String eta = gotgift.getString("Music") + " Seconds";
             TextView etatoshow = rootView.findViewById(R.id.textView4);
             etatoshow.setText(eta);
+            TextView inkchangeactive = rootView.findViewById(R.id.textView53);
+            if (generateink() == true){
+                inkchangeactive.setText("INK CHANGE IN PROGRESS");
+            }
         } catch (NullPointerException nullex){
             System.out.println("No Data from ETA Algo!");
         }
@@ -46,5 +52,16 @@ public class Fragment_music extends Fragment {
 
 
         return rootView;
+    }
+
+    public boolean generateink(){
+        Random rand = new Random();
+        int random =  rand.nextInt(6);
+        if (random == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
