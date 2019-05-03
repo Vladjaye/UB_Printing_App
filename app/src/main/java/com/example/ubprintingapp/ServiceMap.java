@@ -267,9 +267,9 @@ public class ServiceMap extends Service implements
         //download data from google
 
 
-        
-      //  Maps.FetchUrl FetchUrl = new Maps.FetchUrl();
-      // FetchUrl.execute(url);
+
+    //    Maps.FetchUrl FetchUrl = new Maps.FetchUrl();
+     //  FetchUrl.execute(url);
 
     }
 
@@ -451,6 +451,7 @@ private class PTask extends AsyncTask<String, Integer, List<List<HashMap<String,
             //checking if duration and distance are working
             System.out.println("Duration is " + duration);
             System.out.println("Distance is " + distance);
+
 
 
         }

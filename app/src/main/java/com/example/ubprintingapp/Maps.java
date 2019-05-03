@@ -417,8 +417,18 @@ public class Maps extends FragmentActivity implements
                 mMap.addPolyline(lineOptions);
 
                 //checking if duration and distance are working
-                System.out.println("Duration is " + duration);
-                System.out.println("Distance is " + distance);
+                System.out.println("ACTUAL Duration is" + duration);
+                System.out.println("ACTUAL Distance is" + distance);
+
+                //sending data to PrintingList Class
+               // Intent intent = new Intent(this, PrintingList.class);
+               // Bundle b = new Bundle();
+
+              //  b.putString("duration", duration);
+              //  intent.putExtras(b);
+              //  startActivity(intent);
+
+
 
 
             }
@@ -449,6 +459,8 @@ public class Maps extends FragmentActivity implements
 
                 data.add(distance);
                 data.add(duration);
+
+                System.out.print("DIS" + distance);
             }
 
             if (requestCode == 2) {
@@ -477,10 +489,8 @@ public class Maps extends FragmentActivity implements
         else {
             Toast.makeText(this, "Wrong", Toast.LENGTH_SHORT).show();
         }
+
     }
-
-
-
 
 
     // method which will return distance and duration (we need it to use the data on others classes)
