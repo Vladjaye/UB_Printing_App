@@ -14,15 +14,17 @@ import android.widget.TextView;
 
 import com.example.ubprintingapp.R;
 
+import java.util.Random;
+
 
 public class Fragment_capen extends Fragment {
 
-    public void showonmapcapen(){ //onClick open map activity
+    public void showonmapcapen(View v){ //onClick open map activity
         Intent intent = new Intent(getActivity(), Maps.class);
         Bundle b = new Bundle();
         b.putInt("key", 1);
         intent.putExtras(b);
-        startActivity(intent);
+      startActivity(intent);
 
     }
 
@@ -37,9 +39,15 @@ public class Fragment_capen extends Fragment {
                 false);
         try {
             Bundle gotgift = getArguments();
-            String eta = gotgift.getString("Capen") + " Seconds";
+           // String eta = gotgift.getString("Capen") + " Seconds";
+            String eta = minutesformat(Integer.valueOf(gotgift.getString("Capen")));
             TextView etatoshow = rootView.findViewById(R.id.textView4);
             etatoshow.setText(eta);
+            TextView inkchangeactive = rootView.findViewById(R.id.textView51);
+            if (generateink() == true){
+                inkchangeactive.setText("INK CHANGE IN PROGRESS");
+            }
+
         } catch (NullPointerException nullex){
             System.out.println("No Data from ETA Algo!");
         }
@@ -48,7 +56,7 @@ public class Fragment_capen extends Fragment {
         capenbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showonmapcapen();
+                showonmapcapen(v);
             }
         }
 
@@ -56,5 +64,24 @@ public class Fragment_capen extends Fragment {
 
 
         return rootView;
+    }
+
+    public boolean generateink(){
+        Random rand = new Random();
+        int random =  rand.nextInt(6);
+        if (random == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public String minutesformat(int seconds){
+        String time;
+        int secs = seconds %60;
+        int mins = seconds /60;
+        time ="" + mins + " Minute(s) " + secs + " Second(s)";
+                return time;
     }
 }

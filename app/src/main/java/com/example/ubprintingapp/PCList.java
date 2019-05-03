@@ -81,6 +81,8 @@ public class PCList extends AppCompatActivity {
         myDataset[18] = "PC #19: " + statustostring(generatepcstatus());
         myDataset[19] = "PC #20: " + statustostring(generatepcstatus());
 
+        System.out.print("OK");
+
 
 
 
