@@ -30,7 +30,7 @@ public class Fragment_music extends Fragment {
                 false);
         try {
             Bundle gotgift = getArguments();
-           // String eta = gotgift.getString("Music") + " Seconds";
+           //String eta = gotgift.getString("Music") + " Seconds";
             String eta = minutesformat(Integer.valueOf(gotgift.getString("Music")));
             TextView etatoshow = rootView.findViewById(R.id.textView4);
             etatoshow.setText(eta);

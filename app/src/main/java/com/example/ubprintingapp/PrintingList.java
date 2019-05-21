@@ -81,51 +81,79 @@ public class PrintingList extends AppCompatActivity {  //Activity (Window) For P
 
 
     //Author: Vladyslav Iakusevych
-    public int calculatetime(int jobcount, int library) {
-
+    public int calculatetime(int[] jobcount, int library) {
+        //distance and travel time are in Maps class - please check them. Due to Fragment Layer use, we still did not figured out how to
+        //push travel time and distance into that class even though we have te data.
         //10 seconds per page
         //20 seconds per job
-            try{
-                Intent intent = new Intent(this, Maps.class);
+        int result = -1;
+           // try{
+               // Intent intent = new Intent(this, Maps.class);
                // startActivity(intent);
 
-               Bundle temp =  intent.getExtras();
+            //   Bundle temp =  intent.getExtras();
                if (library == 1) {
-                   capendist = temp.getString("dist");
-                   capentime = temp.getString("time");
+             //      capendist = temp.getString("dist");
+             //      capentime = temp.getString("time");
 
-                   String[] subst = capentime.split(" ");
+//                   String[] subst = capentime.split(" ");
 
-                   int result = jobcount*10 + Integer.valueOf(subst[0]);
+                   //int result = jobcount*10 + Integer.valueOf(subst[0]);
+                   int qcount = (jobcount.length-1) * 20; //jobs?
+                   int amount = 0; //papers per job?
+                   for (int zh =0; zh < jobcount.length; zh++){
+                       amount = amount +jobcount[zh];
+                   }
+                   amount = amount *10;
+                   result = qcount + amount;
                    Log.e("ESTIMATE TIME RESULT: ", result + "SECONDS");
                    return result;
 
                }
                 if (library == 2) {
-                    capendist = temp.getString("dist");
-                    capentime = temp.getString("time");
-                    int result = jobcount*10 + Integer.valueOf(locktime);
+              //      capendist = temp.getString("dist");
+                //    capentime = temp.getString("time");
+                    int qcount = (jobcount.length-1) * 20;//
+                    int amount = 0;
+                    for (int x =0; x < jobcount.length; x++){
+                        amount = amount + jobcount[x];
+                    }
+                    amount = amount *10;
+                    result = qcount + amount;
                     Log.e("ESTIMATE TIME RESULT: ", result + "SECONDS");
                     return result;
                 }
                 if (library == 3) {
-                    capendist = temp.getString("dist");
-                    capentime = temp.getString("time");
-                    int result = jobcount*10 + Integer.valueOf(musictime);
+               //     capendist = temp.getString("dist");
+                 //   capentime = temp.getString("time");
+                   // int result = jobcount*10 + Integer.valueOf(musictime);
+                    int qcount = (jobcount.length-1) *20;
+                    int amount = 0;
+                    for (int x=0; x < jobcount.length; x++){
+                        amount = amount + jobcount[x];
+                    }
+                    amount = amount *10;
+                    result = qcount + amount;
                     Log.e("ESTIMATE TIME RESULT: ", result + "SECONDS");
                     return result;
                 }
 
-            }catch (Exception badmapdtime){}
+          //  }catch (Exception badmapdtime){}
 
-        //int maptime = 0; //travel time to library from Google Maps API For now it is 0 - waiting for Maria to finish maps functionality.
-        return jobcount * 10;
+        //int maptime = 0; //travel time to library from Google Maps API. The data is stored in Maps.java
+       return result;
     }
 
     //Author: Vladyslav Iakusevych
-    public int generatequeue() { //Random.
-        int random = (int) (Math.random() * 90 + 1);
-        return random;
+    public int[] generatequeue() { //Random.
+        int random = (int) (Math.random() * 30 + 1);
+        int papers = (int) (Math.random() * 10 + 1);
+        int[] mockupq = new int[random];
+        for (int i =0; i < mockupq.length; i++){
+            mockupq[i] = papers;
+        }
+       // return random;
+        return mockupq;
 
         //TODO: Rewrite it for individual pages algorithm
     }

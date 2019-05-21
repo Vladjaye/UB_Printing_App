@@ -35,7 +35,7 @@ public class Fragment_lockwood extends Fragment {
                     false);
             try {
                 Bundle gotgift = getArguments();
-                //String eta = gotgift.getString("Lock") + " Seconds";
+              //  String eta = gotgift.getString("Lock") + " Seconds";
                 String eta = minutesformat(Integer.valueOf(gotgift.getString("Lock")));
                 TextView etatoshow = rootView.findViewById(R.id.textView4);
                 etatoshow.setText(eta);
