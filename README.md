@@ -1,4 +1,4 @@
-# UB_Where_When
+# UB_Printing_App
 UB Printing App
 
 Android App for UB Students.
